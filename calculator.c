@@ -1,23 +1,120 @@
 #include <gtk/gtk.h>
+#include <string.h>
 
 bool dot_added = false;
 bool op_added = false;
+bool equaled = true;
+bool n_after_op = false;
+GtkLabel *up_panel;
+GtkLabel *low_panel;
 
+static void calculate(char *text)
+{
+    int length = strlen(text);
+    int first_space;
+    for (int i = 0; i < length; i++)
+    {
+        if (text[i] == ' ')
+        {
+            first_space = i;
+            break;
+        }
+    }
+    char n1[first_space + 2];
+    for (int i = 0; i < first_space; i++)
+    {
+        n1[i] = text[i];
+    }
+    char n2[length - first_space - 2];
+    char op = text[first_space + 1];
+    for (int i = first_space + 3; i < length; i++)
+    {
+        n2[i - first_space - 3] = text[i];
+    }
+    double x = strtod(n1, NULL);
+    double y = strtod(n2, NULL);
+    if (op == '+')
+        x += y;
+    else if (op == '-')
+        x -= y;
+    else if (op == '*')
+        x *= y;
+    else
+    {
+        if (y == 0)
+        {
+            // handle division by 0
+            return;
+        }
+        x /= y;
+    }
+    char output[17];
+    snprintf(output, 17, "%f", x);
+    gtk_label_set_label(low_panel, output);
+}
 static void plus()
 {
-    printf("HOOOYAAA");
+    if (op_added)
+        return;
+    char text[21];
+    if (equaled)
+    {
+        gtk_label_set_label(up_panel, gtk_label_get_label(low_panel));
+        equaled = false;
+    }
+    strcpy(text, gtk_label_get_label(low_panel));
+    strcat(text, " + ");
+    gtk_label_set_label(up_panel, text);
+    gtk_label_set_label(low_panel, "");
+    op_added = true;
 }
 static void minus()
 {
-    printf("HOOOYAAA");
+    if (op_added)
+        return;
+    if (equaled)
+    {
+        gtk_label_set_label(up_panel, gtk_label_get_label(low_panel));
+        equaled = false;
+    }
+    char text[21];
+    strcpy(text, gtk_label_get_label(low_panel));
+    strcat(text, " - ");
+    gtk_label_set_label(up_panel, text);
+    gtk_label_set_label(low_panel, "");
+    op_added = true;
 }
 static void mult()
 {
-    printf("HOOOYAAA");
+    if (op_added)
+        return;
+    if (equaled)
+    {
+        gtk_label_set_label(up_panel, gtk_label_get_label(low_panel));
+        equaled = false;
+    }
+    char text[21];
+    strcpy(text, gtk_label_get_label(low_panel));
+    strcat(text, " * ");
+    gtk_label_set_label(up_panel, text);
+    gtk_label_set_label(low_panel, "");
+    op_added = true;
 }
 static void divi()
 {
-    printf("HOOOYAAA");
+    if (op_added)
+        return;
+    if (equaled)
+    {
+        gtk_label_set_label(up_panel, gtk_label_get_label(low_panel));
+        equaled = false;
+    }
+    char text[21];
+    strcpy(text, gtk_label_get_label(low_panel));
+    strcat(text, " / ");
+    gtk_label_set_label(up_panel, text);
+    gtk_label_set_label(low_panel, "");
+    op_added = true;
 }
 static void negate()
 {
@@ -53,51 +150,182 @@ static void ce()
 }
 static void equal()
 {
-    printf("HOOOYAAA");
+    if (equaled)
+        return;
+    if (!n_after_op)
+    {
+        return;
+    }
+    char text[42];
+    strcpy(text, gtk_label_get_label(up_panel));
+    strcat(text, gtk_label_get_label(low_panel));
+    calculate(text);
+    strcat(text, " =");
+    gtk_label_set_label(up_panel, text);
+    equaled = true;
+    op_added = false;
+    n_after_op = false;
 }
 static void zero()
 {
-    printf("HOOOYAAA");
+    char text[21];
+    if (equaled)
+        strcpy(text, "");
+    else
+        strcpy(text, gtk_label_get_label(low_panel));
+    if (strlen(text) < 16)
+        gtk_label_set_label(low_panel, strcat(text, "0"));
 }
 static void one()
 {
-    printf("HOOOYAAA");
+    if (op_added)
+    {
+        n_after_op = true;
+    }
+    char text[21];
+    if (equaled)
+        strcpy(text, "");
+    else
+        strcpy(text, gtk_label_get_label(low_panel));
+    if (strlen(text) < 16)
+        gtk_label_set_label(low_panel, strcat(text, "1"));
+    equaled = false;
 }
 static void two()
 {
-    printf("HOOOYAAA");
+    if (op_added)
+    {
+        n_after_op = true;
+    }
+    char text[21];
+    if (equaled)
+        strcpy(text, "");
+    else
+        strcpy(text, gtk_label_get_label(low_panel));
+    if (strlen(text) < 16)
+        gtk_label_set_label(low_panel, strcat(text, "2"));
+    equaled = false;
 }
 static void three()
 {
-    printf("HOOOYAAA");
+    if (op_added)
+    {
+        n_after_op = true;
+    }
+    char text[21];
+    if (equaled)
+        strcpy(text, "");
+    else
+        strcpy(text, gtk_label_get_label(low_panel));
+    if (strlen(text) < 16)
+        gtk_label_set_label(low_panel, strcat(text, "3"));
+    equaled = false;
 }
 static void four()
 {
-    printf("HOOOYAAA");
+    if (op_added)
+    {
+        n_after_op = true;
+    }
+    char text[21];
+    if (equaled)
+        strcpy(text, "");
+    else
+        strcpy(text, gtk_label_get_label(low_panel));
+    if (strlen(text) < 16)
+        gtk_label_set_label(low_panel, strcat(text, "4"));
+    equaled = false;
 }
 static void five()
 {
-    printf("HOOOYAAA");
+    if (op_added)
+    {
+        n_after_op = true;
+    }
+    char text[21];
+    if (equaled)
+        strcpy(text, "");
+    else
+        strcpy(text, gtk_label_get_label(low_panel));
+    if (strlen(text) < 16)
+        gtk_label_set_label(low_panel, strcat(text, "5"));
+    equaled = false;
 }
 static void six()
 {
-    printf("HOOOYAAA");
+    if (op_added)
+    {
+        n_after_op = true;
+    }
+    char text[21];
+    if (equaled)
+        strcpy(text, "");
+    else
+        strcpy(text, gtk_label_get_label(low_panel));
+    if (strlen(text) < 16)
+        gtk_label_set_label(low_panel, strcat(text, "6"));
+    equaled = false;
 }
 static void seven()
 {
-    printf("HOOOYAAA");
+    if (op_added)
+    {
+        n_after_op = true;
+    }
+    char text[21];
+    if (equaled)
+        strcpy(text, "");
+    else
+        strcpy(text, gtk_label_get_label(low_panel));
+    if (strlen(text) < 16)
+        gtk_label_set_label(low_panel, strcat(text, "7"));
+    equaled = false;
 }
 static void eight()
 {
-    printf("HOOOYAAA");
+    if (op_added)
+    {
+        n_after_op = true;
+    }
+    char text[21];
+    if (equaled)
+        strcpy(text, "");
+    else
+        strcpy(text, gtk_label_get_label(low_panel));
+    if (strlen(text) < 16)
+        gtk_label_set_label(low_panel, strcat(text, "8"));
+    equaled = false;
 }
 static void nine()
 {
-    printf("HOOOYAAA");
+    if (op_added)
+    {
+        n_after_op = true;
+    }
+    char text[21];
+    if (equaled)
+        strcpy(text, "");
+    else
+        strcpy(text, gtk_label_get_label(low_panel));
+    if (strlen(text) < 16)
+        gtk_label_set_label(low_panel, strcat(text, "9"));
+    equaled = false;
 }
 static void dot()
 {
-    printf("HOOOYAAA");
+    char text[21];
+    if (op_added && !n_after_op)
+    {
+        n_after_op = true;
+        strcpy(text, "0");
+    }
+    else if (equaled)
+        strcpy(text, "0");
+    else
+        strcpy(text, gtk_label_get_label(low_panel));
+    if (strlen(text) < 16)
+        gtk_label_set_label(low_panel, strcat(text, "."));
+    equaled = false;
 }
 
 static void activate(GtkApplication *app, gpointer user_data)
@@ -106,6 +334,7 @@ static void activate(GtkApplication *app, gpointer user_data)
 
     GtkWidget *win = GTK_WIDGET(gtk_builder_get_object(build, "win"));
     gtk_window_set_application(GTK_WINDOW(win), GTK_APPLICATION(app));
+    gtk_window_set_resizable(GTK_WINDOW(win), 0);
     gtk_widget_show(GTK_WIDGET(win));
 
     GtkButton *bp = GTK_BUTTON(gtk_builder_get_object(build, "bplus"));
@@ -179,6 +408,14 @@ static void activate(GtkApplication *app, gpointer user_data)
 
     GtkButton *bdot = GTK_BUTTON(gtk_builder_get_object(build, "bd"));
     g_signal_connect(bdot, "clicked", G_CALLBACK(dot), NULL);
+
+    up_panel = GTK_LABEL(gtk_builder_get_object(build, "up_panel"));
+    gtk_label_set_max_width_chars(up_panel, 40);
+    gtk_label_set_wrap_mode(up_panel, PANGO_WRAP_WORD_CHAR);
+
+    low_panel = GTK_LABEL(gtk_builder_get_object(build, "low_panel"));
+    gtk_label_set_max_width_chars(low_panel, 20);
+    gtk_label_set_wrap_mode(low_panel, PANGO_WRAP_WORD_CHAR);
 }
 
 int main(int argc, char **argv)
