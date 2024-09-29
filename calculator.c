@@ -1,5 +1,6 @@
 #include <gtk/gtk.h>
 #include <string.h>
+#include <math.h>
 
 bool dot_added = false;
 bool op_added = false;
@@ -7,6 +8,32 @@ bool equaled = true;
 bool n_after_op = false;
 GtkLabel *up_panel;
 GtkLabel *low_panel;
+
+static void calculate();
+static void equal();
+static void minus();
+static void plus();
+static void mult();
+static void divi();
+static void negate();
+static void inverse();
+static void square();
+static void sine();
+static void cosine();
+static void tangent();
+static void c();
+static void ce();
+static void zero();
+static void one();
+static void two();
+static void three();
+static void four();
+static void five();
+static void six();
+static void seven();
+static void eight();
+static void nine();
+static void dot();
 
 static void calculate(char *text)
 {
@@ -49,14 +76,20 @@ static void calculate(char *text)
         x /= y;
     }
     char output[17];
-    snprintf(output, 17, "%f", x);
+    snprintf(output, 17, "%g", x);
     gtk_label_set_label(low_panel, output);
 }
 static void plus()
 {
-    if (op_added)
+    if (op_added && !n_after_op)
         return;
     char text[21];
+    if (n_after_op)
+    {
+        equal();
+        op_added = true;
+        n_after_op = false;
+    }
     if (equaled)
     {
         gtk_label_set_label(up_panel, gtk_label_get_label(low_panel));
@@ -70,8 +103,14 @@ static void plus()
 }
 static void minus()
 {
-    if (op_added)
+    if (op_added && !n_after_op)
         return;
+    if (n_after_op)
+    {
+        equal();
+        op_added = true;
+        n_after_op = false;
+    }
     if (equaled)
     {
         gtk_label_set_label(up_panel, gtk_label_get_label(low_panel));
@@ -86,8 +125,14 @@ static void minus()
 }
 static void mult()
 {
-    if (op_added)
+    if (op_added && !n_after_op)
         return;
+    if (n_after_op)
+    {
+        equal();
+        op_added = true;
+        n_after_op = false;
+    }
     if (equaled)
     {
         gtk_label_set_label(up_panel, gtk_label_get_label(low_panel));
@@ -102,8 +147,14 @@ static void mult()
 }
 static void divi()
 {
-    if (op_added)
+    if (op_added && !n_after_op)
         return;
+    if (n_after_op)
+    {
+        equal();
+        op_added = true;
+        n_after_op = false;
+    }
     if (equaled)
     {
         gtk_label_set_label(up_panel, gtk_label_get_label(low_panel));
@@ -122,23 +173,58 @@ static void negate()
 }
 static void inverse()
 {
-    printf("HOOOYAAA");
+    char text[17];
+    strcpy(text, gtk_label_get_label(low_panel));
+    double x = strtod(text, NULL);
+    x = 1 / x;
+    snprintf(text, 17, "%g", x);
+    gtk_label_set_label(low_panel, text);
+    if (!op_added)
+        equaled = true;
 }
 static void sine()
 {
-    printf("HOOOYAAA");
+    char text[17];
+    strcpy(text, gtk_label_get_label(low_panel));
+    double x = strtod(text, NULL);
+    x = sin(x);
+    snprintf(text, 17, "%g", x);
+    gtk_label_set_label(low_panel, text);
+    if (!op_added)
+        equaled = true;
 }
 static void cosine()
 {
-    printf("HOOOYAAA");
+    char text[17];
+    strcpy(text, gtk_label_get_label(low_panel));
+    double x = strtod(text, NULL);
+    x = cos(x);
+    snprintf(text, 17, "%g", x);
+    gtk_label_set_label(low_panel, text);
+    if (!op_added)
+        equaled = true;
 }
 static void tangent()
 {
-    printf("HOOOYAAA");
+    char text[17];
+    strcpy(text, gtk_label_get_label(low_panel));
+    double x = strtod(text, NULL);
+    x = tan(x);
+    snprintf(text, 17, "%g", x);
+    gtk_label_set_label(low_panel, text);
+    if (!op_added)
+        equaled = true;
 }
 static void square()
 {
-    printf("HOOOYAAA");
+    char text[17];
+    strcpy(text, gtk_label_get_label(low_panel));
+    double x = strtod(text, NULL);
+    x *= x;
+    snprintf(text, 17, "%g", x);
+    gtk_label_set_label(low_panel, text);
+    if (!op_added)
+        equaled = true;
 }
 static void c()
 {
@@ -429,3 +515,5 @@ int main(int argc, char **argv)
     g_object_unref(app);
     return status;
 }
+
+// -.-- --- ... . ..-.
