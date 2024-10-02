@@ -6,6 +6,8 @@ bool dot_added = false;
 bool op_added = false;
 bool equaled = true;
 bool n_after_op = false;
+bool unary = false;
+bool error = false;
 GtkLabel *up_panel;
 GtkLabel *low_panel;
 
@@ -70,7 +72,8 @@ static void calculate(char *text)
     {
         if (y == 0)
         {
-            // handle division by 0
+            gtk_label_set_label(low_panel, "Error");
+            error = true;
             return;
         }
         x /= y;
@@ -81,7 +84,7 @@ static void calculate(char *text)
 }
 static void plus()
 {
-    if (op_added && !n_after_op)
+    if (op_added && !n_after_op || error)
         return;
     char text[21];
     if (n_after_op)
@@ -103,7 +106,7 @@ static void plus()
 }
 static void minus()
 {
-    if (op_added && !n_after_op)
+    if (op_added && !n_after_op || error)
         return;
     if (n_after_op)
     {
@@ -125,7 +128,7 @@ static void minus()
 }
 static void mult()
 {
-    if (op_added && !n_after_op)
+    if (op_added && !n_after_op || error)
         return;
     if (n_after_op)
     {
@@ -147,7 +150,7 @@ static void mult()
 }
 static void divi()
 {
-    if (op_added && !n_after_op)
+    if (op_added && !n_after_op || error)
         return;
     if (n_after_op)
     {
@@ -173,17 +176,28 @@ static void negate()
 }
 static void inverse()
 {
+    if (error)
+        return;
     char text[17];
     strcpy(text, gtk_label_get_label(low_panel));
     double x = strtod(text, NULL);
+    if (x == 0)
+    {
+        gtk_label_set_label(low_panel, "Error");
+        error = true;
+        return;
+    }
     x = 1 / x;
     snprintf(text, 17, "%g", x);
     gtk_label_set_label(low_panel, text);
     if (!op_added)
         equaled = true;
+    unary = true;
 }
 static void sine()
 {
+    if (error)
+        return;
     char text[17];
     strcpy(text, gtk_label_get_label(low_panel));
     double x = strtod(text, NULL);
@@ -192,9 +206,12 @@ static void sine()
     gtk_label_set_label(low_panel, text);
     if (!op_added)
         equaled = true;
+    unary = true;
 }
 static void cosine()
 {
+    if (error)
+        return;
     char text[17];
     strcpy(text, gtk_label_get_label(low_panel));
     double x = strtod(text, NULL);
@@ -203,9 +220,12 @@ static void cosine()
     gtk_label_set_label(low_panel, text);
     if (!op_added)
         equaled = true;
+    unary = true;
 }
 static void tangent()
 {
+    if (error)
+        return;
     char text[17];
     strcpy(text, gtk_label_get_label(low_panel));
     double x = strtod(text, NULL);
@@ -214,9 +234,12 @@ static void tangent()
     gtk_label_set_label(low_panel, text);
     if (!op_added)
         equaled = true;
+    unary = true;
 }
 static void square()
 {
+    if (error)
+        return;
     char text[17];
     strcpy(text, gtk_label_get_label(low_panel));
     double x = strtod(text, NULL);
@@ -225,18 +248,36 @@ static void square()
     gtk_label_set_label(low_panel, text);
     if (!op_added)
         equaled = true;
+    unary = true;
 }
 static void c()
 {
-    printf("HOOOYAAA");
+    dot_added = false;
+    op_added = false;
+    equaled = true;
+    n_after_op = false;
+    unary = false;
+    error = false;
+    gtk_label_set_label(low_panel, "0");
+    gtk_label_set_label(up_panel, "");
 }
 static void ce()
 {
-    printf("HOOOYAAA");
+    if (equaled || error)
+    {
+        c();
+        return;
+    }
+    if (op_added)
+        printf("HOOYAA");
+    dot_added = false;
+    n_after_op = false;
+    unary = false;
+    gtk_label_set_label(low_panel, "");
 }
 static void equal()
 {
-    if (equaled)
+    if (equaled || error)
         return;
     if (!n_after_op)
     {
@@ -251,12 +292,27 @@ static void equal()
     equaled = true;
     op_added = false;
     n_after_op = false;
+    unary = false;
 }
 static void zero()
 {
     char text[21];
+    if (error)
+        c();
+    if (op_added)
+    {
+        n_after_op = true;
+    }
     if (equaled)
+    {
         strcpy(text, "");
+        gtk_label_set_label(up_panel, "");
+    }
+    else if (unary)
+    {
+        strcpy(text, "");
+        unary = false;
+    }
     else
         strcpy(text, gtk_label_get_label(low_panel));
     if (strlen(text) < 16)
@@ -264,13 +320,23 @@ static void zero()
 }
 static void one()
 {
+    if (error)
+        c();
     if (op_added)
     {
         n_after_op = true;
     }
     char text[21];
     if (equaled)
+    {
         strcpy(text, "");
+        gtk_label_set_label(up_panel, "");
+    }
+    else if (unary)
+    {
+        strcpy(text, "");
+        unary = false;
+    }
     else
         strcpy(text, gtk_label_get_label(low_panel));
     if (strlen(text) < 16)
@@ -279,13 +345,23 @@ static void one()
 }
 static void two()
 {
+    if (error)
+        c();
     if (op_added)
     {
         n_after_op = true;
     }
     char text[21];
     if (equaled)
+    {
         strcpy(text, "");
+        gtk_label_set_label(up_panel, "");
+    }
+    else if (unary)
+    {
+        strcpy(text, "");
+        unary = false;
+    }
     else
         strcpy(text, gtk_label_get_label(low_panel));
     if (strlen(text) < 16)
@@ -294,13 +370,23 @@ static void two()
 }
 static void three()
 {
+    if (error)
+        c();
     if (op_added)
     {
         n_after_op = true;
     }
     char text[21];
     if (equaled)
+    {
         strcpy(text, "");
+        gtk_label_set_label(up_panel, "");
+    }
+    else if (unary)
+    {
+        strcpy(text, "");
+        unary = false;
+    }
     else
         strcpy(text, gtk_label_get_label(low_panel));
     if (strlen(text) < 16)
@@ -309,13 +395,23 @@ static void three()
 }
 static void four()
 {
+    if (error)
+        c();
     if (op_added)
     {
         n_after_op = true;
     }
     char text[21];
     if (equaled)
+    {
         strcpy(text, "");
+        gtk_label_set_label(up_panel, "");
+    }
+    else if (unary)
+    {
+        strcpy(text, "");
+        unary = false;
+    }
     else
         strcpy(text, gtk_label_get_label(low_panel));
     if (strlen(text) < 16)
@@ -324,13 +420,23 @@ static void four()
 }
 static void five()
 {
+    if (error)
+        c();
     if (op_added)
     {
         n_after_op = true;
     }
     char text[21];
     if (equaled)
+    {
         strcpy(text, "");
+        gtk_label_set_label(up_panel, "");
+    }
+    else if (unary)
+    {
+        strcpy(text, "");
+        unary = false;
+    }
     else
         strcpy(text, gtk_label_get_label(low_panel));
     if (strlen(text) < 16)
@@ -339,13 +445,23 @@ static void five()
 }
 static void six()
 {
+    if (error)
+        c();
     if (op_added)
     {
         n_after_op = true;
     }
     char text[21];
     if (equaled)
+    {
         strcpy(text, "");
+        gtk_label_set_label(up_panel, "");
+    }
+    else if (unary)
+    {
+        strcpy(text, "");
+        unary = false;
+    }
     else
         strcpy(text, gtk_label_get_label(low_panel));
     if (strlen(text) < 16)
@@ -354,13 +470,23 @@ static void six()
 }
 static void seven()
 {
+    if (error)
+        c();
     if (op_added)
     {
         n_after_op = true;
     }
     char text[21];
     if (equaled)
+    {
         strcpy(text, "");
+        gtk_label_set_label(up_panel, "");
+    }
+    else if (unary)
+    {
+        strcpy(text, "");
+        unary = false;
+    }
     else
         strcpy(text, gtk_label_get_label(low_panel));
     if (strlen(text) < 16)
@@ -369,13 +495,23 @@ static void seven()
 }
 static void eight()
 {
+    if (error)
+        c();
     if (op_added)
     {
         n_after_op = true;
     }
     char text[21];
     if (equaled)
+    {
         strcpy(text, "");
+        gtk_label_set_label(up_panel, "");
+    }
+    else if (unary)
+    {
+        strcpy(text, "");
+        unary = false;
+    }
     else
         strcpy(text, gtk_label_get_label(low_panel));
     if (strlen(text) < 16)
@@ -384,13 +520,23 @@ static void eight()
 }
 static void nine()
 {
+    if (error)
+        c();
     if (op_added)
     {
         n_after_op = true;
     }
     char text[21];
     if (equaled)
+    {
         strcpy(text, "");
+        gtk_label_set_label(up_panel, "");
+    }
+    else if (unary)
+    {
+        strcpy(text, "");
+        unary = false;
+    }
     else
         strcpy(text, gtk_label_get_label(low_panel));
     if (strlen(text) < 16)
@@ -399,19 +545,22 @@ static void nine()
 }
 static void dot()
 {
+    if (error)
+        c();
     char text[21];
     if (op_added && !n_after_op)
     {
         n_after_op = true;
         strcpy(text, "0");
     }
-    else if (equaled)
+    else if (equaled || unary)
         strcpy(text, "0");
     else
         strcpy(text, gtk_label_get_label(low_panel));
     if (strlen(text) < 16)
         gtk_label_set_label(low_panel, strcat(text, "."));
     equaled = false;
+    unary = false;
 }
 
 static void activate(GtkApplication *app, gpointer user_data)
@@ -515,5 +664,3 @@ int main(int argc, char **argv)
     g_object_unref(app);
     return status;
 }
-
-// -.-- --- ... . ..-.
