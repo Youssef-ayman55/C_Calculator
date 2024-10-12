@@ -42,7 +42,7 @@
                 <property name="label" translatable="yes">0</property>
                 <property name="justify">right</property>
                 <attributes>
-                  <attribute name="font-desc" value="Times New Roman, Bold 34"/>
+                  <attribute name="font-desc" value="Times New Roman, Bold 30"/>
                 </attributes>
               </object>
               <packing>

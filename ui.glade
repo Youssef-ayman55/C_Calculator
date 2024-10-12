@@ -74,6 +74,7 @@
                 <property name="label" translatable="yes">1/x</property>
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
+                <property name="focus-on-click">False</property>
                 <property name="receives-default">True</property>
               </object>
               <packing>
@@ -86,6 +87,7 @@
                 <property name="label" translatable="yes">CE</property>
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
+                <property name="focus-on-click">False</property>
                 <property name="receives-default">True</property>
               </object>
               <packing>
@@ -98,6 +100,7 @@
                 <property name="label" translatable="yes">C</property>
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
+                <property name="focus-on-click">False</property>
                 <property name="receives-default">True</property>
                 <property name="valign">baseline</property>
               </object>
@@ -111,6 +114,7 @@
                 <property name="label" translatable="yes">*</property>
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
+                <property name="focus-on-click">False</property>
                 <property name="receives-default">True</property>
               </object>
               <packing>
@@ -123,6 +127,7 @@
                 <property name="label" translatable="yes">/</property>
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
+                <property name="focus-on-click">False</property>
                 <property name="receives-default">True</property>
               </object>
               <packing>
@@ -135,6 +140,7 @@
                 <property name="label" translatable="yes">9</property>
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
+                <property name="focus-on-click">False</property>
                 <property name="receives-default">True</property>
               </object>
               <packing>
@@ -147,6 +153,7 @@
                 <property name="label" translatable="yes">8</property>
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
+                <property name="focus-on-click">False</property>
                 <property name="receives-default">True</property>
               </object>
               <packing>
@@ -159,6 +166,7 @@
                 <property name="label" translatable="yes">7</property>
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
+                <property name="focus-on-click">False</property>
                 <property name="receives-default">True</property>
               </object>
               <packing>
@@ -171,6 +179,7 @@
                 <property name="label" translatable="yes">sin</property>
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
+                <property name="focus-on-click">False</property>
                 <property name="receives-default">True</property>
               </object>
               <packing>
@@ -183,6 +192,7 @@
                 <property name="label" translatable="yes">x^2</property>
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
+                <property name="focus-on-click">False</property>
                 <property name="receives-default">True</property>
               </object>
               <packing>
@@ -195,6 +205,7 @@
                 <property name="label" translatable="yes">cos</property>
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
+                <property name="focus-on-click">False</property>
                 <property name="receives-default">True</property>
               </object>
               <packing>
@@ -207,6 +218,7 @@
                 <property name="label" translatable="yes">tan</property>
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
+                <property name="focus-on-click">False</property>
                 <property name="receives-default">True</property>
               </object>
               <packing>
@@ -237,6 +249,7 @@
                 <property name="label" translatable="yes">4</property>
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
+                <property name="focus-on-click">False</property>
                 <property name="receives-default">True</property>
               </object>
               <packing>
@@ -249,6 +262,7 @@
                 <property name="label" translatable="yes">5</property>
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
+                <property name="focus-on-click">False</property>
                 <property name="receives-default">True</property>
               </object>
               <packing>
@@ -261,6 +275,7 @@
                 <property name="label" translatable="yes">6</property>
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
+                <property name="focus-on-click">False</property>
                 <property name="receives-default">True</property>
               </object>
               <packing>
@@ -273,6 +288,7 @@
                 <property name="label" translatable="yes">-</property>
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
+                <property name="focus-on-click">False</property>
                 <property name="receives-default">True</property>
               </object>
               <packing>
@@ -285,6 +301,7 @@
                 <property name="label" translatable="yes">1</property>
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
+                <property name="focus-on-click">False</property>
                 <property name="receives-default">True</property>
               </object>
               <packing>
@@ -297,6 +314,7 @@
                 <property name="label" translatable="yes">2</property>
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
+                <property name="focus-on-click">False</property>
                 <property name="receives-default">True</property>
               </object>
               <packing>
@@ -309,6 +327,7 @@
                 <property name="label" translatable="yes">3</property>
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
+                <property name="focus-on-click">False</property>
                 <property name="receives-default">True</property>
               </object>
               <packing>
@@ -321,6 +340,7 @@
                 <property name="label" translatable="yes">+</property>
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
+                <property name="focus-on-click">False</property>
                 <property name="receives-default">True</property>
               </object>
               <packing>
@@ -330,8 +350,10 @@
             </child>
             <child>
               <object class="GtkButton" id="bnegate">
+                <property name="label" translatable="yes">+/-</property>
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
+                <property name="focus-on-click">False</property>
                 <property name="receives-default">True</property>
               </object>
               <packing>
@@ -344,6 +366,7 @@
                 <property name="label" translatable="yes">0</property>
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
+                <property name="focus-on-click">False</property>
                 <property name="receives-default">True</property>
               </object>
               <packing>
@@ -356,6 +379,7 @@
                 <property name="label" translatable="yes">.</property>
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
+                <property name="focus-on-click">False</property>
                 <property name="receives-default">True</property>
               </object>
               <packing>
@@ -368,6 +392,7 @@
                 <property name="label" translatable="yes">=</property>
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
+                <property name="focus-on-click">False</property>
                 <property name="receives-default">True</property>
               </object>
               <packing>

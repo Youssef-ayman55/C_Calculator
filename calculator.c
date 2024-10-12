@@ -172,7 +172,14 @@ static void divi()
 }
 static void negate()
 {
-    printf("HOOOYAAA");
+    if (error)
+        return;
+    char text[17];
+    strcpy(text, gtk_label_get_label(low_panel));
+    double x = strtod(text, NULL);
+    x *= -1;
+    snprintf(text, 17, "%g", x);
+    gtk_label_set_label(low_panel, text);
 }
 static void inverse()
 {
@@ -564,37 +571,37 @@ static void dot()
 }
 gboolean keypress(GtkEventControllerKey *event_controller, guint keyval, guint keycode, GdkModifierType state, gpointer user_data)
 {
-    if (keyval == GDK_KEY_0)
+    if (keyval == GDK_KEY_0 || keyval == GDK_KEY_KP_0)
         zero();
-    else if (keyval == GDK_KEY_1)
+    else if (keyval == GDK_KEY_1 || keyval == GDK_KEY_KP_1)
         one();
-    else if (keyval == GDK_KEY_2)
+    else if (keyval == GDK_KEY_2 || keyval == GDK_KEY_KP_2)
         two();
-    else if (keyval == GDK_KEY_3)
+    else if (keyval == GDK_KEY_3 || keyval == GDK_KEY_KP_3)
         three();
-    else if (keyval == GDK_KEY_4)
+    else if (keyval == GDK_KEY_4 || keyval == GDK_KEY_KP_4)
         four();
-    else if (keyval == GDK_KEY_5)
+    else if (keyval == GDK_KEY_5 || keyval == GDK_KEY_KP_5)
         five();
-    else if (keyval == GDK_KEY_6)
+    else if (keyval == GDK_KEY_6 || keyval == GDK_KEY_KP_6)
         six();
-    else if (keyval == GDK_KEY_7)
+    else if (keyval == GDK_KEY_7 || keyval == GDK_KEY_KP_7)
         seven();
-    else if (keyval == GDK_KEY_8)
+    else if (keyval == GDK_KEY_8 || keyval == GDK_KEY_KP_8)
         eight();
-    else if (keyval == GDK_KEY_9)
+    else if (keyval == GDK_KEY_9 || keyval == GDK_KEY_KP_9)
         nine();
-    else if (keyval == GDK_KEY_plus)
+    else if (keyval == GDK_KEY_plus || keyval == GDK_KEY_KP_Add)
         plus();
-    else if (keyval == GDK_KEY_minus)
+    else if (keyval == GDK_KEY_minus || keyval == GDK_KEY_KP_Subtract)
         minus();
-    else if (keyval == GDK_KEY_asterisk)
+    else if (keyval == GDK_KEY_asterisk || keyval == GDK_KEY_KP_Multiply)
         mult();
-    else if (keyval == GDK_KEY_slash)
+    else if (keyval == GDK_KEY_slash || keyval == GDK_KEY_KP_Divide)
         divi();
-    else if (keyval == GDK_KEY_period)
+    else if (keyval == GDK_KEY_period || keyval == GDK_KEY_KP_Decimal)
         dot();
-    else if (keyval == GDK_KEY_equal)
+    else if (keyval == GDK_KEY_equal || keyval == GDK_KEY_KP_Enter || keyval == GDK_KEY_Return)
         equal();
     else
     {
