@@ -36,7 +36,7 @@ static void seven();
 static void eight();
 static void nine();
 static void dot();
-
+gboolean keypress(GtkEventControllerKey *event_controller, guint keyval, guint keycode, GdkModifierType state, gpointer user_data);
 static void calculate(char *text)
 {
     int length = strlen(text);
@@ -562,12 +562,56 @@ static void dot()
     equaled = false;
     unary = false;
 }
-
+gboolean keypress(GtkEventControllerKey *event_controller, guint keyval, guint keycode, GdkModifierType state, gpointer user_data)
+{
+    if (keyval == GDK_KEY_0)
+        zero();
+    else if (keyval == GDK_KEY_1)
+        one();
+    else if (keyval == GDK_KEY_2)
+        two();
+    else if (keyval == GDK_KEY_3)
+        three();
+    else if (keyval == GDK_KEY_4)
+        four();
+    else if (keyval == GDK_KEY_5)
+        five();
+    else if (keyval == GDK_KEY_6)
+        six();
+    else if (keyval == GDK_KEY_7)
+        seven();
+    else if (keyval == GDK_KEY_8)
+        eight();
+    else if (keyval == GDK_KEY_9)
+        nine();
+    else if (keyval == GDK_KEY_plus)
+        plus();
+    else if (keyval == GDK_KEY_minus)
+        minus();
+    else if (keyval == GDK_KEY_asterisk)
+        mult();
+    else if (keyval == GDK_KEY_slash)
+        divi();
+    else if (keyval == GDK_KEY_period)
+        dot();
+    else if (keyval == GDK_KEY_equal)
+        equal();
+    else
+    {
+        return false;
+    }
+    return true;
+}
 static void activate(GtkApplication *app, gpointer user_data)
 {
     GtkBuilder *build = gtk_builder_new_from_file("calculator.ui");
 
     GtkWidget *win = GTK_WIDGET(gtk_builder_get_object(build, "win"));
+    gtk_widget_set_focusable(win, TRUE);
+    GtkEventController *event_controller;
+    event_controller = gtk_event_controller_key_new();
+    gtk_widget_add_controller(win, event_controller);
+    g_signal_connect(event_controller, "key-pressed", G_CALLBACK(keypress), NULL);
     gtk_window_set_application(GTK_WINDOW(win), GTK_APPLICATION(app));
     gtk_window_set_resizable(GTK_WINDOW(win), 0);
     gtk_widget_show(GTK_WIDGET(win));
