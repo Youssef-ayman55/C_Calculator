@@ -1,6 +1,7 @@
 # C_Calculator
+![image](https://github.com/user-attachments/assets/ba45d436-6150-4cea-bfc9-dafedf06ab93)
 
-This is a standard calculator program built in C using the GUI library gtk 4.
+This is a standard calculator program built in C using the GUI library GTK 4.
 
 ## Running the source code
 To run the source code for this project, you have to install the [gtk 4.0](https://www.gtk.org/) library on your machine and configure your IDE appropriately.
