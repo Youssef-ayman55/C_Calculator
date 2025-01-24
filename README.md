@@ -1,6 +1,5 @@
 # C_Calculator
-![image](https://github.com/user-attachments/assets/ba45d436-6150-4cea-bfc9-dafedf06ab93)
-
+<img src="https://github.com/user-attachments/assets/ba45d436-6150-4cea-bfc9-dafedf06ab93" alt="Alt Text" style="width:50%; height:auto;">
 This is a standard calculator program built in C using the GUI library GTK 4.
 
 ## Building the source code
